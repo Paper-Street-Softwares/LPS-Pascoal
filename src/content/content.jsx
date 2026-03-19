@@ -56,7 +56,7 @@ export const infos = {
   name: "Pascoal & Dyandra Advocacia & Consultoria Jurídica",
   email: "contato", // Email desejado pelo cliente
   emailSecundario: "A_Definir", // Email desejado pelo cliente
-  domain: "pascoaledyandraadvocacia.com.br", // Sem "www"
+  domain: "lead.motoristatemdireito.com.br", // Sem "www"
   phone: {
     ddd: "15",
     firstPart: "99746", // Apenas os 5 primeiros números (incluindo o 9)
