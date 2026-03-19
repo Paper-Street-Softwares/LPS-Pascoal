@@ -7,15 +7,7 @@ export default function Sucesso() {
   const months = location.state?.months;
   const message = location.state?.message;
 
-  const finalMessage =
-    message ||
-    `Olá, eu me chamo ${name}.
-Estou grávida de até ${months || 6} meses.
-Gostaria de receber o salário-maternidade. Pode me ajudar?`;
-
-  const whatsappLink = `https://wa.me/553196385637?text=${encodeURIComponent(
-    finalMessage,
-  )}`;
+  const whatsappLink = `https://wa.me/553196385637?text=${encodeURIComponent()}`;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#051E3C] p-4">
@@ -49,12 +41,14 @@ Gostaria de receber o salário-maternidade. Pode me ajudar?`;
             equipe vai analisar seu caso com atenção e entrará em contato em até
             48 horas para te orientar sobre os próximos passos.
           </p>
-          <button
-            onClick={() => navigate("/sucesso", { state: { answers } })}
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full bg-primaryLight text-black font-bold py-4 px-6 rounded-lg hover:shadow-lg transition-all"
           >
             FALAR COM ESPECIALISTA
-          </button>
+          </a>
         </div>
       </div>
     </div>
