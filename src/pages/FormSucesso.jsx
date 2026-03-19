@@ -44,7 +44,6 @@ export default function Sucesso() {
     return encodeURIComponent(fullMessage);
   };
 
-  // Número com 55 (Brasil) e a mensagem gerada
   const whatsappLink = `https://wa.me/5515997462217?text=${generateWhatsappMessage()}`;
 
   return (
