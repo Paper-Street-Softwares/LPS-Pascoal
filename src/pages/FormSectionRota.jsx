@@ -24,7 +24,6 @@ export default function Quiz() {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
 
-  // Mapeamento de todas as telas de pergunta para cálculo da barra
   const questionScreens = [
     "step1",
     "step2",
@@ -47,31 +46,33 @@ export default function Quiz() {
   }
 
   function handleChoice(field, value, nextScreen) {
-    const newAnswers = { ...answers, [field]: value };
-    setAnswers(newAnswers);
+    setAnswers((prev) => ({ ...prev, [field]: value }));
     setScreen(nextScreen);
   }
 
   function checkFinalStep(lastValue) {
-    const updatedAnswers = { ...answers, assedio: lastValue };
+    // Usamos a função de atualização para garantir que pegamos o estado real
+    setAnswers((prev) => {
+      const updatedAnswers = { ...prev, assedio: lastValue };
 
-    // Perguntas específicas para a regra de qualificação
-    const checkFields = [
-      updatedAnswers.outrasFuncoes,
-      updatedAnswers.rodavaNoite,
-      updatedAnswers.periculosidade,
-      updatedAnswers.descontos,
-      updatedAnswers.foraDeCasa,
-      updatedAnswers.assedio,
-    ];
+      const checkFields = [
+        updatedAnswers.outrasFuncoes,
+        updatedAnswers.rodavaNoite,
+        updatedAnswers.periculosidade,
+        updatedAnswers.descontos,
+        updatedAnswers.foraDeCasa,
+        updatedAnswers.assedio,
+      ];
 
-    const hasAnySim = checkFields.includes("Sim");
+      const hasAnySim = checkFields.includes("Sim");
 
-    if (hasAnySim) {
-      navigate("/sucesso", { state: { answers: updatedAnswers } });
-    } else {
-      setScreen("final_aviso");
-    }
+      if (hasAnySim) {
+        navigate("/sucesso", { state: { answers: updatedAnswers } });
+      } else {
+        setScreen("final_aviso");
+      }
+      return updatedAnswers;
+    });
   }
 
   useEffect(() => {
@@ -84,7 +85,6 @@ export default function Quiz() {
     }
   }, [screen]);
 
-  // Componente da Barra de Progresso para evitar repetição
   const ProgressBar = () => (
     <div className="w-full mb-6">
       <div className="h-2 bg-[#F1F3F7] rounded-full overflow-hidden">
@@ -102,7 +102,6 @@ export default function Quiz() {
         <img src={Logo} alt="Logo" className="max-w-[200px]" />
       </div>
 
-      {/* TELA INICIAL */}
       {screen === "start" && (
         <div className="bg-[#FAFBFC] max-w-[672px] h-fit rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]">
           <div className="w-full text-center smooth-pop">
@@ -114,7 +113,7 @@ export default function Quiz() {
             </p>
             <button
               onClick={startQuiz}
-              className="bg-primaryLight text-black font-bold py-4 px-8 rounded-lg hover:shadow-lg transition-all text-lg"
+              className="bg-primaryLight text-black font-bold py-4 px-8 rounded-lg text-lg"
             >
               INICIAR ANÁLISE AGORA
             </button>
@@ -122,11 +121,9 @@ export default function Quiz() {
         </div>
       )}
 
-      {/* PERGUNTAS (Com Barra de Progresso) */}
       {questionScreens.includes(screen) && (
         <div className="bg-[#FAFBFC] max-w-[672px] w-full h-fit rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]">
           <ProgressBar />
-
           <div className="smooth-pop">
             {screen === "step1" && (
               <>
@@ -481,30 +478,9 @@ export default function Quiz() {
         </div>
       )}
 
-      {/* TELA FINAL (TODOS NÃO) */}
       {screen === "final_aviso" && (
         <div className="w-full max-w-2xl bg-[#FAFBFC] rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]">
           <div className="w-full text-center smooth-pop">
-            <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-x-icon lucide-x"
-                  className="text-red-500"
-                >
-                  <path d="M18 6 6 18" />
-                  <path d="m6 6 12 12" />
-                </svg>
-              </div>
-            </div>
             <h2 className="text-2xl md:text-3xl font-bold text-[#051E3C] mb-6">
               Indícios não Identificados!
             </h2>
@@ -520,7 +496,7 @@ export default function Quiz() {
             </p>
             {/* <button
               onClick={() => navigate("/sucesso", { state: { answers } })}
-              className="w-full bg-primaryLight text-black font-bold py-4 px-6 rounded-lg hover:shadow-lg transition-all"
+              className="w-full bg-primaryLight text-black font-bold py-4 rounded-lg"
             >
               FALAR COM ESPECIALISTA
             </button> */}
@@ -528,7 +504,6 @@ export default function Quiz() {
         </div>
       )}
 
-      {/* DESQUALIFICADO CLT */}
       {screen === "desqualificado_clt" && (
         <div className="bg-[#FAFBFC] smooth-pop max-w-[672px] h-fit rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9] w-full text-center">
           <div className="w-16 h-16 bg-[#E0E2E9] mx-auto mb-4 rounded-full flex items-center justify-center">
@@ -551,11 +526,10 @@ export default function Quiz() {
           </div>
           <h2 className="text-2xl font-bold mb-6">
             Esta análise é exclusiva para motoristas de caminhão CLT.
-            Agradecemos o interesse!
           </h2>
           <button
             onClick={() => setScreen("start")}
-            className="w-full bg-[#E0E2E9] text-[#051E3C] font-semibold py-4 px-6 rounded-lg transition-all"
+            className="w-full bg-[#E0E2E9] text-[#051E3C] font-semibold py-4 px-6 rounded-lg"
           >
             Voltar ao início
           </button>

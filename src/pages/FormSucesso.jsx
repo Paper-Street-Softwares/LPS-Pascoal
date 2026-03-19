@@ -3,11 +3,49 @@ import { useLocation } from "react-router-dom";
 export default function Sucesso() {
   const location = useLocation();
 
-  const name = location.state?.name;
-  const months = location.state?.months;
-  const message = location.state?.message;
+  // Captura o objeto de respostas enviado pelo Quiz
+  const answers = location.state?.answers || {};
 
-  const whatsappLink = `https://wa.me/553196385637?text=${encodeURIComponent()}`;
+  // Função para formatar os dados de forma legível para o WhatsApp
+  const generateWhatsappMessage = () => {
+    const intro =
+      "Olá, vim através do site, poderia me ajudar? Essas são minhas informações:\n\n";
+
+    // Mapeamento para nomes amigáveis na mensagem
+    const labels = {
+      tipoTrabalho: "Tipo de Trabalho",
+      statusEmprego: "Status Atual",
+      dataAdmissao: "Data de Admissão",
+      dataSaida: "Data de Saída",
+      outrasFuncoes: "Fazia outras funções",
+      jornada: "Jornada diária",
+      horasExtras: "Recebia Horas Extras",
+      rodavaNoite: "Rodava à Noite",
+      adicionalNoturno: "Recebia Adicional Noturno",
+      periculosidade: "Carga Perigosa",
+      recebiaPericulosidade: "Recebia Adicional 30%",
+      descontos: "Descontos Indevidos",
+      foraDeCasa: "26+ dias fora de casa",
+      assedio: "Sofreu Assédio",
+    };
+
+    // Filtra apenas o que foi respondido e formata a lista
+    const details = Object.entries(answers)
+      .map(([key, value]) => {
+        if (!value) return null;
+        return `*${labels[key] || key}:* ${value}`;
+      })
+      .filter(Boolean)
+      .join("\n");
+
+    const fullMessage = intro + details;
+
+    // Retorna a URL codificada para o link
+    return encodeURIComponent(fullMessage);
+  };
+
+  // Número com 55 (Brasil) e a mensagem gerada
+  const whatsappLink = `https://wa.me/5515997462217?text=${generateWhatsappMessage()}`;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#051E3C] p-4">
@@ -32,20 +70,23 @@ export default function Sucesso() {
               </svg>
             </div>
           </div>
+
           <h2 className="text-2xl md:text-3xl font-bold text-[#051E3C] mb-6">
             Indícios Identificados!
           </h2>
+
           <p className="text-[#051E3C] mb-8 leading-relaxed">
             Com base nas suas respostas, identificamos indícios de que seus
             direitos trabalhistas podem ter sido violados. Fique ligado: nossa
             equipe vai analisar seu caso com atenção e entrará em contato em até
             48 horas para te orientar sobre os próximos passos.
           </p>
+
           <a
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full bg-primaryLight text-black font-bold py-4 px-6 rounded-lg hover:shadow-lg transition-all"
+            className="w-full inline-block text-center bg-primaryLight text-black font-bold py-4 px-6 rounded-lg hover:shadow-lg transition-all"
           >
             FALAR COM ESPECIALISTA
           </a>
