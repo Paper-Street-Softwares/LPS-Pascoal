@@ -8,10 +8,21 @@ export default function Sucesso() {
 
   // Função para formatar os dados de forma legível para o WhatsApp
   const generateWhatsappMessage = () => {
+    // 1. Frase Inicial
     const intro =
-      "Olá, sou motorista de caminhão e preciso de ajuda! Poderia me ajudar? Essas são minhas informações:\n\n";
+      "Olá, sou motorista de caminhão e preciso de ajuda! Poderia me ajudar?\n\n";
 
-    // Mapeamento para nomes amigáveis na mensagem
+    // 2. Dados Pessoais (Organizados no bloco superior)
+    const nome = answers.nome ? `*Nome:* ${answers.nome}\n` : "";
+    const whatsapp = answers.whatsapp
+      ? `*WhatsApp:* ${answers.whatsapp}\n`
+      : "";
+    const cidade = answers.cidade ? `*Cidade:* ${answers.cidade}\n` : "";
+    const estado = answers.estado ? `*Estado:* ${answers.estado}\n` : "";
+
+    const dadosPessoais = `${nome}${whatsapp}${cidade}${estado}\n`;
+
+    // 3. Informações do Formulário (Quiz)
     const labels = {
       tipoTrabalho: "Tipo de Trabalho",
       statusEmprego: "Status Atual",
@@ -29,8 +40,11 @@ export default function Sucesso() {
       assedio: "Sofreu Assédio",
     };
 
-    // Filtra apenas o que foi respondido e formata a lista
-    const details = Object.entries(answers)
+    // 4. Filtro para remover os dados acima da lista técnica
+    const quizDetails = Object.entries(answers)
+      .filter(
+        ([key]) => !["nome", "whatsapp", "cidade", "estado"].includes(key),
+      )
       .map(([key, value]) => {
         if (!value) return null;
         return `*${labels[key] || key}:* ${value}`;
@@ -38,13 +52,12 @@ export default function Sucesso() {
       .filter(Boolean)
       .join("\n");
 
-    const fullMessage = intro + details;
+    // Montagem final com os blocos bem definidos
+    const fullMessage = `${intro}*DADOS DO MOTORISTA:*\n${dadosPessoais}*INFORMAÇÕES DO CASO:*\n${quizDetails}`;
 
-    // Retorna a URL codificada para o link
     return encodeURIComponent(fullMessage);
   };
-
-  const whatsappLink = `https://wa.me/5515997462217?text=${generateWhatsappMessage()}`;
+  const whatsappLink = `https://wa.me/5561992781077?text=${generateWhatsappMessage()}`;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-primaryDark p-4">
