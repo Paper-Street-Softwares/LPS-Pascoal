@@ -4,8 +4,9 @@ import Logo from "../assets/imgs/logo/logoDesktop.webp";
 import { ArrowLeft } from "lucide-react";
 
 export default function Quiz() {
-  const [screen, setScreen] = useState("step1");
+  const [screen, setScreen] = useState("start");
   const [answers, setAnswers] = useState({
+    nome: "",
     tipoTrabalho: "",
     statusEmprego: "",
     dataAdmissao: "",
@@ -25,7 +26,9 @@ export default function Quiz() {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
 
+  // Incluí o "start" na lista para a barra de progresso contar desde o nome
   const questionScreens = [
+    "start",
     "step1",
     "step2",
     "step_data_adm",
@@ -42,32 +45,24 @@ export default function Quiz() {
     "step10",
   ];
 
-  function startQuiz() {
-    setScreen("step1");
-  }
-
-  // Lógica de voltar inteligente respeitando as condicionais
   function handleBack() {
     const currentIndex = questionScreens.indexOf(screen);
 
     if (currentIndex <= 0) {
-      setScreen("step1");
+      // Já está na primeira tela (nome)
       return;
     }
 
     let prevStep = questionScreens[currentIndex - 1];
 
-    // Regra para pular Periculosidade (30%) ao voltar
     if (screen === "step8" && answers.periculosidade === "Não") {
       prevStep = "step7";
     }
 
-    // Regra para pular Adicional Noturno ao voltar
     if (screen === "step7" && answers.rodavaNoite === "Não") {
       prevStep = "step6";
     }
 
-    // Regra para pular Data de Saída ao voltar (se for funcionário Ativo)
     if (screen === "step3" && answers.statusEmprego === "Ativo") {
       prevStep = "step_data_adm";
     }
@@ -125,7 +120,7 @@ export default function Quiz() {
   const BackButton = () => (
     <button
       onClick={handleBack}
-      className="flex items-center gap-2 text-gray-400 hover:text-primaryDark mb-2 transition-colors w-fit"
+      className={`flex items-center gap-2 text-gray-400 hover:text-primaryDark mb-2 transition-colors w-fit ${screen === "start" ? "invisible" : ""}`}
     >
       <ArrowLeft size={18} />
       <span className="text-sm font-medium">Voltar</span>
@@ -138,25 +133,6 @@ export default function Quiz() {
         <img src={Logo} alt="Logo" className="max-w-[200px]" />
       </div>
 
-      {/* {screen === "start" && (
-        <div className="bg-[#FAFBFC] max-w-[672px] h-fit rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]">
-          <div className="w-full text-center smooth-pop">
-            <h1 className="text-3xl md:text-4xl font-bold text-[#051E3C] mb-4">
-              Análise de Direitos Trabalhistas
-            </h1>
-            <p className="text-[#051E3C] mb-8">
-              Clique no botão abaixo e faça sua simulação gratuita agora!
-            </p>
-            <button
-              onClick={startQuiz}
-              className="bg-primaryLight text-black font-bold py-4 px-8 rounded-lg text-lg"
-            >
-              INICIAR ANÁLISE AGORA
-            </button>
-          </div>
-        </div>
-      )} */}
-
       {questionScreens.includes(screen) && (
         <div
           key={screen}
@@ -167,9 +143,39 @@ export default function Quiz() {
           <div className="smooth-pop">
             <BackButton />
 
+            {screen === "start" && (
+              <>
+                <p className="mb-2">Pergunta 1 de 15</p>
+                <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
+                  Qual o seu nome?
+                </h2>
+                <input
+                  type="text"
+                  placeholder="Digite seu nome"
+                  value={answers.nome}
+                  onChange={(e) =>
+                    setAnswers({ ...answers, nome: e.target.value })
+                  }
+                  className="w-full mb-6 p-4 border-2 border-[#E0E2E9] rounded-lg focus:border-primaryLight outline-none"
+                />
+                <button
+                  onClick={() => {
+                    if (answers.nome.trim()) setScreen("step1");
+                  }}
+                  className={`w-full font-semibold py-4 rounded-lg transition-all ${
+                    !answers.nome.trim()
+                      ? "bg-gray-300 cursor-not-allowed text-gray-500"
+                      : "bg-primaryLight text-black"
+                  }`}
+                >
+                  Continuar
+                </button>
+              </>
+            )}
+
             {screen === "step1" && (
               <>
-                <p className="mb-2">Pergunta 1 de 14</p>
+                <p className="mb-2">Pergunta 2 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você trabalha como motorista de caminhão CLT ou autônomo?
                 </h2>
@@ -192,7 +198,7 @@ export default function Quiz() {
 
             {screen === "step2" && (
               <>
-                <p className="mb-2">Pergunta 2 de 14</p>
+                <p className="mb-2">Pergunta 3 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você ainda trabalha na empresa ou já foi dispensado?
                 </h2>
@@ -223,7 +229,7 @@ export default function Quiz() {
 
             {screen === "step_data_adm" && (
               <>
-                <p className="mb-2">Pergunta 3 de 14</p>{" "}
+                <p className="mb-2">Pergunta 4 de 15</p>{" "}
                 <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
                   Qual a data em que você começou a trabalhar na empresa?
                 </h2>
@@ -238,7 +244,7 @@ export default function Quiz() {
                 />
                 <button
                   onClick={() => {
-                    if (!answers.dataAdmissao) return; // Torna obrigatório
+                    if (!answers.dataAdmissao) return;
                     setScreen(
                       answers.statusEmprego === "Ativo"
                         ? "step3"
@@ -254,7 +260,7 @@ export default function Quiz() {
 
             {screen === "step_data_saida" && (
               <>
-                <p className="mb-2">Pergunta 4 de 14</p>
+                <p className="mb-2">Pergunta 5 de 15</p>
                 <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
                   Qual a data em que seu contrato foi encerrado?{" "}
                 </h2>
@@ -269,7 +275,7 @@ export default function Quiz() {
                 />
                 <button
                   onClick={() => {
-                    if (!answers.dataSaida) return; // Torna obrigatório
+                    if (!answers.dataSaida) return;
                     setScreen("step3");
                   }}
                   className={`w-full font-semibold py-4 rounded-lg transition-opacity ${!answers.dataSaida ? "opacity-50 cursor-not-allowed bg-gray-300" : "bg-primaryLight text-black"}`}
@@ -281,7 +287,7 @@ export default function Quiz() {
 
             {screen === "step3" && (
               <>
-                <p className="mb-2">Pergunta 5 de 14</p>
+                <p className="mb-2">Pergunta 6 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Além de dirigir o caminhão, você fazia outras funções, como
                   carregar, descarregar ou conferir carga?
@@ -309,7 +315,7 @@ export default function Quiz() {
 
             {screen === "step4" && (
               <>
-                <p className="mb-2">Pergunta 6 de 14</p>
+                <p className="mb-2">Pergunta 7 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Qual era a sua jornada de trabalho diária?
                 </h2>
@@ -342,7 +348,7 @@ export default function Quiz() {
 
             {screen === "step5" && (
               <>
-                <p className="mb-2">Pergunta 7 de 14</p>
+                <p className="mb-2">Pergunta 8 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você recebia corretamente pelas horas extras e pelo tempo de
                   espera para carga e descarga?
@@ -366,7 +372,7 @@ export default function Quiz() {
 
             {screen === "step6" && (
               <>
-                <p className="mb-2">Pergunta 8 de 14</p>
+                <p className="mb-2">Pergunta 9 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você roda à noite, entre 22h e 5h?
                 </h2>
@@ -391,7 +397,7 @@ export default function Quiz() {
 
             {screen === "step6_adicional" && (
               <>
-                <p className="mb-2">Pergunta 9 de 14</p>
+                <p className="mb-2">Pergunta 10 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você recebia corretamente o adicional noturno pelo trabalho
                   nesse período?
@@ -419,7 +425,7 @@ export default function Quiz() {
 
             {screen === "step7" && (
               <>
-                <p className="mb-2">Pergunta 10 de 14</p>
+                <p className="mb-2">Pergunta 11 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você transportava combustível ou cargas perigosas
                   regularmente?
@@ -447,7 +453,7 @@ export default function Quiz() {
 
             {screen === "step7_perigo" && (
               <>
-                <p className="mb-2">Pergunta 11 de 14</p>
+                <p className="mb-2">Pergunta 12 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você recebia corretamente o adicional de periculosidade de 30%
                   por transportar combustível ou cargas perigosas?
@@ -475,7 +481,7 @@ export default function Quiz() {
 
             {screen === "step8" && (
               <>
-                <p className="mb-2">Pergunta 12 de 14</p>
+                <p className="mb-2">Pergunta 13 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Já fizeram algum desconto em seu salário sem a sua
                   autorização?
@@ -499,7 +505,7 @@ export default function Quiz() {
 
             {screen === "step9" && (
               <>
-                <p className="mb-2">Pergunta 13 de 14</p>
+                <p className="mb-2">Pergunta 14 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você já passou mais de 26 dias seguidos fora de casa por causa
                   da jornada de trabalho?
@@ -523,7 +529,7 @@ export default function Quiz() {
 
             {screen === "step10" && (
               <>
-                <p className="mb-2">Pergunta 14 de 14</p>
+                <p className="mb-2">Pergunta 15 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você já sofreu assédio no trabalho, sendo humilhado,
                   pressionado ou constrangido na frente dos colegas?
@@ -590,9 +596,10 @@ export default function Quiz() {
           </div>
           <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
             Esta análise é exclusiva para motoristas de caminhão CLT.
+            Agradecemos o interesse!
           </h2>
           <button
-            onClick={() => setScreen("step1")}
+            onClick={() => setScreen("start")}
             className="w-full bg-[#E0E2E9] text-[#051E3C] font-semibold py-4 px-6 rounded-lg"
           >
             Voltar ao início
