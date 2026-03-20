@@ -9,7 +9,7 @@ export default function Sucesso() {
   // Função para formatar os dados de forma legível para o WhatsApp
   const generateWhatsappMessage = () => {
     const intro =
-      "Olá, sou motorista de caminhão e vim através do site, poderia me ajudar? Essas são minhas informações:\n\n";
+      "Olá, sou motorista de caminhão e preciso de ajuda! Poderia me ajudar? Essas são minhas informações:\n\n";
 
     // Mapeamento para nomes amigáveis na mensagem
     const labels = {

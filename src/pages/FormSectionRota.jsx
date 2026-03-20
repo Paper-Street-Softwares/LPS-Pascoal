@@ -4,7 +4,7 @@ import Logo from "../assets/imgs/logo/logoDesktop.webp";
 import { ArrowLeft } from "lucide-react";
 
 export default function Quiz() {
-  const [screen, setScreen] = useState("start");
+  const [screen, setScreen] = useState("step1");
   const [answers, setAnswers] = useState({
     tipoTrabalho: "",
     statusEmprego: "",
@@ -51,7 +51,7 @@ export default function Quiz() {
     const currentIndex = questionScreens.indexOf(screen);
 
     if (currentIndex <= 0) {
-      setScreen("start");
+      setScreen("step1");
       return;
     }
 
@@ -138,7 +138,7 @@ export default function Quiz() {
         <img src={Logo} alt="Logo" className="max-w-[200px]" />
       </div>
 
-      {screen === "start" && (
+      {/* {screen === "start" && (
         <div className="bg-[#FAFBFC] max-w-[672px] h-fit rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]">
           <div className="w-full text-center smooth-pop">
             <h1 className="text-3xl md:text-4xl font-bold text-[#051E3C] mb-4">
@@ -155,7 +155,7 @@ export default function Quiz() {
             </button>
           </div>
         </div>
-      )}
+      )} */}
 
       {questionScreens.includes(screen) && (
         <div
@@ -169,7 +169,7 @@ export default function Quiz() {
 
             {screen === "step1" && (
               <>
-                <p>Pergunta 1 de 14</p>
+                <p className="mb-2">Pergunta 1 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você trabalha como motorista de caminhão CLT ou autônomo?
                 </h2>
@@ -178,13 +178,13 @@ export default function Quiz() {
                     onClick={() => handleChoice("tipoTrabalho", "CLT", "step2")}
                     className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
                   >
-                    Motorista de caminhão CLT
+                    Motorista de caminhão CLT ✅
                   </button>
                   <button
                     onClick={() => setScreen("desqualificado_clt")}
                     className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
                   >
-                    Motorista autônomo
+                    Motorista autônomo ❌
                   </button>
                 </div>
               </>
@@ -192,7 +192,7 @@ export default function Quiz() {
 
             {screen === "step2" && (
               <>
-                <p>Pergunta 2 de 14</p>
+                <p className="mb-2">Pergunta 2 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você ainda trabalha na empresa ou já foi dispensado?
                 </h2>
@@ -203,7 +203,7 @@ export default function Quiz() {
                     }
                     className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
                   >
-                    Ainda trabalho
+                    Ainda trabalho na empresa
                   </button>
                   <button
                     onClick={() =>
@@ -223,12 +223,13 @@ export default function Quiz() {
 
             {screen === "step_data_adm" && (
               <>
-                <p>Pergunta 3 de 14</p>{" "}
+                <p className="mb-2">Pergunta 3 de 14</p>{" "}
                 <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
-                  Qual foi sua data de admissão?
+                  Qual a data em que você começou a trabalhar na empresa?
                 </h2>
                 <input
                   type="date"
+                  required
                   value={answers.dataAdmissao}
                   onChange={(e) =>
                     setAnswers({ ...answers, dataAdmissao: e.target.value })
@@ -236,14 +237,15 @@ export default function Quiz() {
                   className="w-full mb-4 p-4 border-2 border-[#E0E2E9] rounded-lg"
                 />
                 <button
-                  onClick={() =>
+                  onClick={() => {
+                    if (!answers.dataAdmissao) return; // Torna obrigatório
                     setScreen(
                       answers.statusEmprego === "Ativo"
                         ? "step3"
                         : "step_data_saida",
-                    )
-                  }
-                  className="w-full bg-primaryLight text-black font-semibold py-4 rounded-lg"
+                    );
+                  }}
+                  className={`w-full font-semibold py-4 rounded-lg transition-opacity ${!answers.dataAdmissao ? "opacity-50 cursor-not-allowed bg-gray-300" : "bg-primaryLight text-black"}`}
                 >
                   Continuar
                 </button>
@@ -252,12 +254,13 @@ export default function Quiz() {
 
             {screen === "step_data_saida" && (
               <>
-                <p>Pergunta 4 de 14</p>
+                <p className="mb-2">Pergunta 4 de 14</p>
                 <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
-                  Qual foi sua data de saída?
+                  Qual a data em que seu contrato foi encerrado?{" "}
                 </h2>
                 <input
                   type="date"
+                  required
                   value={answers.dataSaida}
                   onChange={(e) =>
                     setAnswers({ ...answers, dataSaida: e.target.value })
@@ -265,8 +268,11 @@ export default function Quiz() {
                   className="w-full mb-4 p-4 border-2 border-[#E0E2E9] rounded-lg"
                 />
                 <button
-                  onClick={() => setScreen("step3")}
-                  className="w-full bg-primaryLight text-black font-semibold py-4 rounded-lg"
+                  onClick={() => {
+                    if (!answers.dataSaida) return; // Torna obrigatório
+                    setScreen("step3");
+                  }}
+                  className={`w-full font-semibold py-4 rounded-lg transition-opacity ${!answers.dataSaida ? "opacity-50 cursor-not-allowed bg-gray-300" : "bg-primaryLight text-black"}`}
                 >
                   Continuar
                 </button>
@@ -275,9 +281,10 @@ export default function Quiz() {
 
             {screen === "step3" && (
               <>
-                <p>Pergunta 5 de 14</p>
+                <p className="mb-2">Pergunta 5 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                  Além de dirigir o caminhão, você fazia outras funções?
+                  Além de dirigir o caminhão, você fazia outras funções, como
+                  carregar, descarregar ou conferir carga?
                 </h2>
                 <div className="space-y-4">
                   <button
@@ -302,7 +309,7 @@ export default function Quiz() {
 
             {screen === "step4" && (
               <>
-                <p>Pergunta 6 de 14</p>
+                <p className="mb-2">Pergunta 6 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Qual era a sua jornada de trabalho diária?
                 </h2>
@@ -335,9 +342,10 @@ export default function Quiz() {
 
             {screen === "step5" && (
               <>
-                <p>Pergunta 7 de 14</p>
+                <p className="mb-2">Pergunta 7 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                  Você recebia corretamente pelas horas extras?
+                  Você recebia corretamente pelas horas extras e pelo tempo de
+                  espera para carga e descarga?
                 </h2>
                 <div className="space-y-4">
                   <button
@@ -358,9 +366,9 @@ export default function Quiz() {
 
             {screen === "step6" && (
               <>
-                <p>Pergunta 8 de 14</p>
+                <p className="mb-2">Pergunta 8 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                  Você rodava à noite (22h às 5h)?
+                  Você roda à noite, entre 22h e 5h?
                 </h2>
                 <div className="space-y-4">
                   <button
@@ -383,9 +391,10 @@ export default function Quiz() {
 
             {screen === "step6_adicional" && (
               <>
-                <p>Pergunta 9 de 14</p>
+                <p className="mb-2">Pergunta 9 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                  Você recebia corretamente o adicional noturno?
+                  Você recebia corretamente o adicional noturno pelo trabalho
+                  nesse período?
                 </h2>
                 <div className="space-y-4">
                   <button
@@ -410,9 +419,10 @@ export default function Quiz() {
 
             {screen === "step7" && (
               <>
-                <p>Pergunta 10 de 14</p>
+                <p className="mb-2">Pergunta 10 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                  Você transportava combustível ou cargas perigosas?
+                  Você transportava combustível ou cargas perigosas
+                  regularmente?
                 </h2>
                 <div className="space-y-4">
                   <button
@@ -437,9 +447,10 @@ export default function Quiz() {
 
             {screen === "step7_perigo" && (
               <>
-                <p>Pergunta 11 de 14</p>
+                <p className="mb-2">Pergunta 11 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                  Você recebia o adicional de 30%?
+                  Você recebia corretamente o adicional de periculosidade de 30%
+                  por transportar combustível ou cargas perigosas?
                 </h2>
                 <div className="space-y-4">
                   <button
@@ -464,9 +475,10 @@ export default function Quiz() {
 
             {screen === "step8" && (
               <>
-                <p>Pergunta 12 de 14</p>
+                <p className="mb-2">Pergunta 12 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                  Já fizeram descontos sem sua autorização?
+                  Já fizeram algum desconto em seu salário sem a sua
+                  autorização?
                 </h2>
                 <div className="space-y-4">
                   <button
@@ -487,9 +499,10 @@ export default function Quiz() {
 
             {screen === "step9" && (
               <>
-                <p>Pergunta 13 de 14</p>
+                <p className="mb-2">Pergunta 13 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                  Já ficou mais de 26 dias fora de casa?
+                  Você já passou mais de 26 dias seguidos fora de casa por causa
+                  da jornada de trabalho?
                 </h2>
                 <div className="space-y-4">
                   <button
@@ -510,9 +523,10 @@ export default function Quiz() {
 
             {screen === "step10" && (
               <>
-                <p>Pergunta 14 de 14</p>
+                <p className="mb-2">Pergunta 14 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                  Você já sofreu assédio no trabalho?
+                  Você já sofreu assédio no trabalho, sendo humilhado,
+                  pressionado ou constrangido na frente dos colegas?
                 </h2>
                 <div className="space-y-4">
                   <button
@@ -534,7 +548,6 @@ export default function Quiz() {
         </div>
       )}
 
-      {/* Telas finais permanecem iguais conforme solicitado */}
       {screen === "final_aviso" && (
         <div className="w-full max-w-2xl bg-[#FAFBFC] rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]">
           <div className="w-full text-center smooth-pop">
@@ -579,7 +592,7 @@ export default function Quiz() {
             Esta análise é exclusiva para motoristas de caminhão CLT.
           </h2>
           <button
-            onClick={() => setScreen("start")}
+            onClick={() => setScreen("step1")}
             className="w-full bg-[#E0E2E9] text-[#051E3C] font-semibold py-4 px-6 rounded-lg"
           >
             Voltar ao início
