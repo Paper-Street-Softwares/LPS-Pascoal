@@ -57,7 +57,7 @@ export default function Sucesso() {
 
     return encodeURIComponent(fullMessage);
   };
-  const whatsappLink = `https://wa.me/5561992781077?text=${generateWhatsappMessage()}`;
+  const whatsappLink = `https://wa.me/5515997462217?text=${generateWhatsappMessage()}`;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-primaryDark p-4">
