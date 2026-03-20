@@ -53,7 +53,7 @@ export default function Sucesso() {
       .join("\n");
 
     // Montagem final com os blocos bem definidos
-    const fullMessage = `${intro}*DADOS DO MOTORISTA:*\n${dadosPessoais}*INFORMAÇÕES DO CASO:*\n${quizDetails}`;
+    const fullMessage = `${intro}*MINHAS INFORMAÇÕES:*\n${dadosPessoais}*INFORMAÇÕES DO CASO:*\n${quizDetails}`;
 
     return encodeURIComponent(fullMessage);
   };
