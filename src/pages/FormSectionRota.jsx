@@ -122,11 +122,16 @@ export default function Quiz() {
       )}
 
       {questionScreens.includes(screen) && (
-        <div className="bg-[#FAFBFC] max-w-[672px] w-full h-fit rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]">
+        <div
+          key={screen}
+          className="bg-[#FAFBFC] max-w-[672px] w-full h-fit rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]"
+        >
           <ProgressBar />
+
           <div className="smooth-pop">
             {screen === "step1" && (
               <>
+                <p>Pergunta 1 de 14</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você trabalha como motorista de caminhão CLT ou autônomo?
                 </h2>
@@ -147,333 +152,375 @@ export default function Quiz() {
               </>
             )}
 
-            {screen === "step2" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                  Você ainda trabalha na empresa ou já foi dispensado?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() =>
-                      handleChoice("statusEmprego", "Ativo", "step_data_adm")
+            <div className="smooth-pop">
+              {screen === "step2" && (
+                <>
+                  <p>Pergunta 2 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
+                    Você ainda trabalha na empresa ou já foi dispensado?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() =>
+                        handleChoice("statusEmprego", "Ativo", "step_data_adm")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Ainda trabalho
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice(
+                          "statusEmprego",
+                          "Dispensado",
+                          "step_data_adm",
+                        )
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Já fui dispensado
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="smooth-pop">
+              {screen === "step_data_adm" && (
+                <>
+                  <p>Pergunta 3 de 14</p>{" "}
+                  <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
+                    Qual foi sua data de admissão?
+                  </h2>
+                  <input
+                    type="date"
+                    value={answers.dataAdmissao}
+                    onChange={(e) =>
+                      setAnswers({ ...answers, dataAdmissao: e.target.value })
                     }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Ainda trabalho
-                  </button>
+                    className="w-full mb-4 p-4 border-2 border-[#E0E2E9] rounded-lg"
+                  />
                   <button
                     onClick={() =>
-                      handleChoice(
-                        "statusEmprego",
-                        "Dispensado",
-                        "step_data_adm",
+                      setScreen(
+                        answers.statusEmprego === "Ativo"
+                          ? "step3"
+                          : "step_data_saida",
                       )
                     }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    className="w-full bg-primaryLight text-black font-semibold py-4 rounded-lg"
                   >
-                    Já fui dispensado
+                    Continuar
                   </button>
-                </div>
-              </>
-            )}
+                </>
+              )}
+            </div>
 
-            {screen === "step_data_adm" && (
-              <>
-                <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
-                  Qual foi sua data de admissão?
-                </h2>
-                <input
-                  type="date"
-                  value={answers.dataAdmissao}
-                  onChange={(e) =>
-                    setAnswers({ ...answers, dataAdmissao: e.target.value })
-                  }
-                  className="w-full mb-4 p-4 border-2 border-[#E0E2E9] rounded-lg"
-                />
-                <button
-                  onClick={() =>
-                    setScreen(
-                      answers.statusEmprego === "Ativo"
-                        ? "step3"
-                        : "step_data_saida",
-                    )
-                  }
-                  className="w-full bg-primaryLight text-black font-semibold py-4 rounded-lg"
-                >
-                  Continuar
-                </button>
-              </>
-            )}
-
-            {screen === "step_data_saida" && (
-              <>
-                <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
-                  Qual foi sua data de saída?
-                </h2>
-                <input
-                  type="date"
-                  value={answers.dataSaida}
-                  onChange={(e) =>
-                    setAnswers({ ...answers, dataSaida: e.target.value })
-                  }
-                  className="w-full mb-4 p-4 border-2 border-[#E0E2E9] rounded-lg"
-                />
-                <button
-                  onClick={() => setScreen("step3")}
-                  className="w-full bg-primaryLight text-black font-semibold py-4 rounded-lg"
-                >
-                  Continuar
-                </button>
-              </>
-            )}
-
-            {screen === "step3" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6">
-                  Além de dirigir o caminhão, você fazia outras funções?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() =>
-                      handleChoice("outrasFuncoes", "Sim", "step4")
+            <div className="smooth-pop">
+              {screen === "step_data_saida" && (
+                <>
+                  <p>Pergunta 4 de 14</p>
+                  <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
+                    Qual foi sua data de saída?
+                  </h2>
+                  <input
+                    type="date"
+                    value={answers.dataSaida}
+                    onChange={(e) =>
+                      setAnswers({ ...answers, dataSaida: e.target.value })
                     }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Sim
-                  </button>
+                    className="w-full mb-4 p-4 border-2 border-[#E0E2E9] rounded-lg"
+                  />
                   <button
-                    onClick={() =>
-                      handleChoice("outrasFuncoes", "Não", "step4")
-                    }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    onClick={() => setScreen("step3")}
+                    className="w-full bg-primaryLight text-black font-semibold py-4 rounded-lg"
                   >
-                    Não
+                    Continuar
                   </button>
-                </div>
-              </>
-            )}
+                </>
+              )}
+            </div>
 
-            {screen === "step4" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6">
-                  Qual era a sua jornada de trabalho diária?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() =>
-                      handleChoice("jornada", "Menos de 8 horas", "step5")
-                    }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Menos de 8 horas
-                  </button>
-                  <button
-                    onClick={() => handleChoice("jornada", "8 horas", "step5")}
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    8 horas
-                  </button>
-                  <button
-                    onClick={() =>
-                      handleChoice("jornada", "Mais de 8 horas", "step5")
-                    }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Mais de 8 horas
-                  </button>
-                </div>
-              </>
-            )}
-
-            {screen === "step5" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6">
-                  Você recebia corretamente pelas horas extras?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() => handleChoice("horasExtras", "Sim", "step6")}
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Sim
-                  </button>
-                  <button
-                    onClick={() => handleChoice("horasExtras", "Não", "step6")}
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Não
-                  </button>
-                </div>
-              </>
-            )}
-
-            {screen === "step6" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6">
-                  Você rodava à noite (22h às 5h)?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() =>
-                      handleChoice("rodavaNoite", "Sim", "step6_adicional")
-                    }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Sim
-                  </button>
-                  <button
-                    onClick={() => handleChoice("rodavaNoite", "Não", "step7")}
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Não
-                  </button>
-                </div>
-              </>
-            )}
-
-            {screen === "step6_adicional" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6">
-                  Você recebia corretamente o adicional noturno?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() =>
-                      handleChoice("adicionalNoturno", "Sim", "step7")
-                    }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Sim
-                  </button>
-                  <button
-                    onClick={() =>
-                      handleChoice("adicionalNoturno", "Não", "step7")
-                    }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Não
-                  </button>
-                </div>
-              </>
-            )}
-
-            {screen === "step7" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6">
-                  Você transportava combustível ou cargas perigosas?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() =>
-                      handleChoice("periculosidade", "Sim", "step7_perigo")
-                    }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Sim
-                  </button>
-                  <button
-                    onClick={() =>
-                      handleChoice("periculosidade", "Não", "step8")
-                    }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Não
-                  </button>
-                </div>
-              </>
-            )}
-
-            {screen === "step7_perigo" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6">
-                  Você recebia o adicional de 30%?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() =>
-                      handleChoice("recebiaPericulosidade", "Sim", "step8")
-                    }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Sim
-                  </button>
-                  <button
-                    onClick={() =>
-                      handleChoice("recebiaPericulosidade", "Não", "step8")
-                    }
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Não
-                  </button>
-                </div>
-              </>
-            )}
-
-            {screen === "step8" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6">
-                  Já fizeram descontos sem sua autorização?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() => handleChoice("descontos", "Sim", "step9")}
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Sim
-                  </button>
-                  <button
-                    onClick={() => handleChoice("descontos", "Não", "step9")}
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Não
-                  </button>
-                </div>
-              </>
-            )}
-
-            {screen === "step9" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6">
-                  Já ficou mais de 26 dias fora de casa?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() => handleChoice("foraDeCasa", "Sim", "step10")}
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Sim
-                  </button>
-                  <button
-                    onClick={() => handleChoice("foraDeCasa", "Não", "step10")}
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Não
-                  </button>
-                </div>
-              </>
-            )}
-
-            {screen === "step10" && (
-              <>
-                <h2 className="text-2xl font-bold mb-6">
-                  Você já sofreu assédio no trabalho?
-                </h2>
-                <div className="space-y-4">
-                  <button
-                    onClick={() => checkFinalStep("Sim")}
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Sim
-                  </button>
-                  <button
-                    onClick={() => checkFinalStep("Não")}
-                    className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
-                  >
-                    Não
-                  </button>
-                </div>
-              </>
-            )}
+            <div className="smooth-pop">
+              {screen === "step3" && (
+                <>
+                  <p>Pergunta 5 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6">
+                    Além de dirigir o caminhão, você fazia outras funções?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() =>
+                        handleChoice("outrasFuncoes", "Sim", "step4")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice("outrasFuncoes", "Não", "step4")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="smooth-pop">
+              {screen === "step4" && (
+                <>
+                  <p>Pergunta 6 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6">
+                    Qual era a sua jornada de trabalho diária?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() =>
+                        handleChoice("jornada", "Menos de 8 horas", "step5")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Menos de 8 horas
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice("jornada", "8 horas", "step5")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      8 horas
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice("jornada", "Mais de 8 horas", "step5")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Mais de 8 horas
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="smooth-pop">
+              {screen === "step5" && (
+                <>
+                  <p>Pergunta 7 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6">
+                    Você recebia corretamente pelas horas extras?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() =>
+                        handleChoice("horasExtras", "Sim", "step6")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice("horasExtras", "Não", "step6")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="smooth-pop">
+              {screen === "step6" && (
+                <>
+                  <p>Pergunta 8 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6">
+                    Você rodava à noite (22h às 5h)?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() =>
+                        handleChoice("rodavaNoite", "Sim", "step6_adicional")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice("rodavaNoite", "Não", "step7")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="smooth-pop">
+              {screen === "step6_adicional" && (
+                <>
+                  <p>Pergunta 9 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6">
+                    Você recebia corretamente o adicional noturno?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() =>
+                        handleChoice("adicionalNoturno", "Sim", "step7")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice("adicionalNoturno", "Não", "step7")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="smooth-pop">
+              {screen === "step7" && (
+                <>
+                  <p>Pergunta 10 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6">
+                    Você transportava combustível ou cargas perigosas?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() =>
+                        handleChoice("periculosidade", "Sim", "step7_perigo")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice("periculosidade", "Não", "step8")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="smooth-pop">
+              {screen === "step7_perigo" && (
+                <>
+                  <p>Pergunta 11 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6">
+                    Você recebia o adicional de 30%?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() =>
+                        handleChoice("recebiaPericulosidade", "Sim", "step8")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice("recebiaPericulosidade", "Não", "step8")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="smooth-pop">
+              {screen === "step8" && (
+                <>
+                  <p>Pergunta 12 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6">
+                    Já fizeram descontos sem sua autorização?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() => handleChoice("descontos", "Sim", "step9")}
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      onClick={() => handleChoice("descontos", "Não", "step9")}
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="smooth-pop">
+              {screen === "step9" && (
+                <>
+                  <p>Pergunta 13 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6">
+                    Já ficou mais de 26 dias fora de casa?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() =>
+                        handleChoice("foraDeCasa", "Sim", "step10")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice("foraDeCasa", "Não", "step10")
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="smooth-pop">
+              {screen === "step10" && (
+                <>
+                  <p>Pergunta 14 de 14</p>
+                  <h2 className="text-2xl font-bold mb-6">
+                    Você já sofreu assédio no trabalho?
+                  </h2>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() => checkFinalStep("Sim")}
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      onClick={() => checkFinalStep("Não")}
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}

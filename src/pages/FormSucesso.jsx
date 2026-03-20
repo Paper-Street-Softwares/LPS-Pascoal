@@ -76,9 +76,10 @@ export default function Sucesso() {
 
           <p className="text-[#051E3C] mb-8 leading-relaxed">
             Com base nas suas respostas, identificamos indícios de que seus
-            direitos trabalhistas podem ter sido violados. Fique ligado: nossa
-            equipe vai analisar seu caso com atenção e entrará em contato em até
-            48 horas para te orientar sobre os próximos passos.
+            direitos trabalhistas podem ter sido violados. Clique no botão
+            abaixo para enviar suas informações e fique ligado: nossa equipe vai
+            analisar seu caso com atenção e entrará em contato em até 48 horas
+            para te orientar sobre os próximos passos.
           </p>
 
           <a
@@ -87,7 +88,7 @@ export default function Sucesso() {
             rel="noopener noreferrer"
             className="w-full inline-block text-center bg-primaryLight text-black font-bold py-4 px-6 rounded-lg hover:shadow-lg transition-all"
           >
-            FALAR COM ESPECIALISTA
+            Enviar minhas informações
           </a>
         </div>
       </div>
