@@ -28,7 +28,7 @@ export default function Quiz() {
 
   const questionScreens = [
     "start",
-    "step0",
+    "step1",
     "step1",
     "step2",
     "step_data_adm",
@@ -172,7 +172,7 @@ export default function Quiz() {
                   direitos trabalhistas.
                 </p>
                 <button
-                  onClick={() => setScreen("step0")}
+                  onClick={() => setScreen("step1")}
                   className="bg-primaryLight text-black font-bold py-4 px-8 rounded-lg hover:shadow-lg transition-all text-lg"
                 >
                   INICIAR ANÁLISE AGORA
@@ -180,9 +180,9 @@ export default function Quiz() {
               </div>
             )}
 
-            {screen === "step0" && (
+            {/* {screen === "step1" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 1 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 1 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Qual o seu nome?
                 </h2>
@@ -208,11 +208,11 @@ export default function Quiz() {
                   Continuar
                 </button>
               </>
-            )}
+            )} */}
 
             {screen === "step1" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 2 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 1 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você trabalha como motorista de caminhão CLT ou autônomo?
                 </h2>
@@ -235,7 +235,7 @@ export default function Quiz() {
 
             {screen === "step2" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 3 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 2 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você ainda trabalha na empresa ou já foi dispensado?
                 </h2>
@@ -266,7 +266,7 @@ export default function Quiz() {
 
             {screen === "step_data_adm" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 4 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 3 de 13</p>
                 <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
                   Qual a data em que você começou a trabalhar na empresa?
                 </h2>
@@ -292,7 +292,7 @@ export default function Quiz() {
 
             {screen === "step_data_saida" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 5 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 3 de 13</p>
                 <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
                   Qual a data em que seu contrato foi encerrado?
                 </h2>
@@ -318,7 +318,7 @@ export default function Quiz() {
 
             {screen === "step3" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 6 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 4 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Além de dirigir o caminhão, você fazia outras funções, como
                   carregar, descarregar ou conferir carga?
@@ -346,7 +346,7 @@ export default function Quiz() {
 
             {screen === "step4" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 7 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 5 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Qual era a sua jornada de trabalho diária?
                 </h2>
@@ -379,7 +379,7 @@ export default function Quiz() {
 
             {screen === "step5" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 8 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 6 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você recebia corretamente pelas horas extras e pelo tempo de
                   espera para carga e descarga?
@@ -403,7 +403,7 @@ export default function Quiz() {
 
             {screen === "step6" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 9 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 7 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você roda à noite, entre 22h e 5h?
                 </h2>
@@ -428,7 +428,7 @@ export default function Quiz() {
 
             {screen === "step6_adicional" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 10 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 8 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você recebia corretamente o adicional noturno pelo trabalho
                   nesse período?
@@ -456,7 +456,7 @@ export default function Quiz() {
 
             {screen === "step7" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 11 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 9 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você transportava combustível ou cargas perigosas
                   regularmente?
@@ -484,7 +484,7 @@ export default function Quiz() {
 
             {screen === "step7_perigo" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 12 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 10 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você recebia corretamente o adicional de periculosidade de 30%
                   por transportar combustível ou cargas perigosas?
@@ -512,7 +512,7 @@ export default function Quiz() {
 
             {screen === "step8" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 13 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 11 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Já fizeram algum desconto em seu salário sem a sua
                   autorização?
@@ -536,7 +536,7 @@ export default function Quiz() {
 
             {screen === "step9" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 14 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 12 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você já passou mais de 26 dias seguidos fora de casa por causa
                   da jornada de trabalho?
@@ -560,7 +560,7 @@ export default function Quiz() {
 
             {screen === "step10" && (
               <>
-                <p className="mb-2 text-gray-400">Pergunta 15 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 13 de 13</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você já sofreu assédio no trabalho, sendo humilhado,
                   pressionado ou constrangido na frente dos colegas?
