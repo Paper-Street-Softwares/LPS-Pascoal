@@ -47,7 +47,7 @@ export default function Sucesso() {
   const whatsappLink = `https://wa.me/5515997462217?text=${generateWhatsappMessage()}`;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#051E3C] p-4">
+    <div className="min-h-screen flex items-center justify-center bg-primaryDark p-4">
       <div className="w-full max-w-2xl bg-[#FAFBFC] rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]">
         <div className="w-full text-center smooth-pop self-enter">
           <div className="flex justify-center mb-6">
