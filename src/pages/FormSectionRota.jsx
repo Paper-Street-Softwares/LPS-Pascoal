@@ -161,7 +161,7 @@ export default function Quiz() {
 
   return (
     <div className="min-h-screen bg-primaryDark flex items-center justify-center p-4 relative">
-      <div className="absolute top-0 bg-primaryDark border-b p-4 w-full flex justify-center max-h-[97px]">
+      <div className="absolute top-0 bg-primaryDark border-b p-4 w-full flex justify-center">
         <img src={Logo} alt="Logo" className="max-w-[200px]" />
       </div>
 
@@ -708,7 +708,7 @@ export default function Quiz() {
         </div>
       )}
 
-      <div className="absolute bottom-0 bg-primaryDark p-4 w-full flex justify-center max-h-[97px]">
+      <div className="absolute bottom-0 bg-primaryDark p-4 w-full flex justify-center">
         <p className="text-center text-corOutrosTextosBranca">
           Dr. Alexandre Pascoal, Advogado Trabalhista Especialista nos Direitos
           dos Motoristas de Caminhão CLT, com mais de 2.000 ações ajuizadas em
