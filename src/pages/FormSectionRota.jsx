@@ -6,6 +6,10 @@ import { ArrowLeft } from "lucide-react";
 export default function Quiz() {
   const [screen, setScreen] = useState("start");
   const [answers, setAnswers] = useState({
+    nomeCompleto: "", // Adicionado
+    whatsapp: "", // Adicionado
+    cidade: "", // Adicionado
+    estado: "", // Adicionado
     nome: "",
     tipoTrabalho: "",
     statusEmprego: "",
@@ -134,6 +138,17 @@ export default function Quiz() {
     );
   };
 
+  const formatWhatsApp = (value) => {
+    if (!value) return "";
+    const phoneNumber = value.replace(/\D/g, ""); // Remove tudo que não é número
+    const phoneNumberLength = phoneNumber.length;
+
+    if (phoneNumberLength < 3) return phoneNumber;
+    if (phoneNumberLength < 7)
+      return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2)}`;
+    return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2, 7)}-${phoneNumber.slice(7, 11)}`;
+  };
+
   const BackButton = () => (
     <button
       onClick={handleBack}
@@ -164,18 +179,93 @@ export default function Quiz() {
               <div className="w-full text-center">
                 <h2 className="text-2xl md:text-3xl font-bold text-[#051E3C] mb-6">
                   Motorista de caminhão CLT: Descubra agora se os seus direitos
-                  estão sendo respeitados.
+                  estão sendo respeitados
                 </h2>
-
                 <p className="text-[#051E3C] mb-8 leading-relaxed">
                   Em poucos segundos, confira se a empresa está respeitando seus
                   direitos trabalhistas.
                 </p>
+
+                {/* Formulário de Identificação */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left">
+                  <div className="md:col-span-2">
+                    <label className="text-sm font-semibold text-[#051E3C]">
+                      Nome completo:
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Seu nome"
+                      className="w-full p-3 border-2 border-[#E0E2E9] rounded-lg focus:border-primaryLight outline-none"
+                      value={answers.nomeCompleto}
+                      onChange={(e) =>
+                        setAnswers({ ...answers, nomeCompleto: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-semibold text-[#051E3C]">
+                      WhatsApp com DDD:
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="(00) 00000-0000"
+                      className="w-full p-3 border-2 border-[#E0E2E9] rounded-lg focus:border-primaryLight outline-none"
+                      value={answers.whatsapp}
+                      onChange={(e) => {
+                        const formattedValue = formatWhatsApp(e.target.value);
+                        setAnswers({ ...answers, whatsapp: formattedValue });
+                      }}
+                      maxLength={15} // Limita para não passar do formato (99) 99999-9999
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-semibold text-[#051E3C]">
+                      Cidade:
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Sua cidade"
+                      className="w-full p-3 border-2 border-[#E0E2E9] rounded-lg focus:border-primaryLight outline-none"
+                      value={answers.cidade}
+                      onChange={(e) =>
+                        setAnswers({ ...answers, cidade: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="text-sm font-semibold text-[#051E3C]">
+                      Estado:
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Seu estado"
+                      className="w-full p-3 border-2 border-[#E0E2E9] rounded-lg focus:border-primaryLight outline-none"
+                      value={answers.estado}
+                      onChange={(e) =>
+                        setAnswers({ ...answers, estado: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+
                 <button
                   onClick={() => setScreen("step1")}
-                  className="bg-primaryLight text-black font-bold py-4 px-8 rounded-lg hover:shadow-lg transition-all text-lg"
+                  disabled={
+                    !answers.nomeCompleto ||
+                    !answers.whatsapp ||
+                    !answers.cidade ||
+                    !answers.estado
+                  }
+                  className={`w-full md:w-auto font-bold py-4 px-8 rounded-lg transition-all text-lg ${
+                    !answers.nomeCompleto ||
+                    !answers.whatsapp ||
+                    !answers.cidade ||
+                    !answers.estado
+                      ? "bg-gray-300 cursor-not-allowed text-gray-500"
+                      : "bg-primaryLight text-black hover:shadow-lg"
+                  }`}
                 >
-                  INICIAR ANÁLISE AGORA
+                  Responder Agora
                 </button>
               </div>
             )}
