@@ -363,7 +363,7 @@ export default function Quiz() {
                   <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
                     Qual a data em que você começou a trabalhar na empresa?
                   </h2>
-                  <p className="font-secondFont text-sm mb-1">
+                  <p className="font-secondFont text-sm mb-1 ">
                     Toque no espaço abaixo para adicionar a data:
                   </p>
                   <input
@@ -373,7 +373,7 @@ export default function Quiz() {
                     onChange={(e) =>
                       setAnswers({ ...answers, dataAdmissao: e.target.value })
                     }
-                    className="w-full mb-4 p-4 border-2 border-[#E0E2E9] rounded-lg"
+                    className="w-[200px]  mb-4 p-4 border-2 border-[#E0E2E9] rounded-lg"
                   />
                   <button
                     onClick={() => {
@@ -392,7 +392,7 @@ export default function Quiz() {
                   <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
                     Qual a data em que seu contrato foi encerrado?
                   </h2>
-                  <p className="font-secondFont text-sm mb-1">
+                  <p className="font-secondFont text-sm mb-1 ">
                     Toque no espaço abaixo para adicionar a data:
                   </p>
                   <input
@@ -402,7 +402,7 @@ export default function Quiz() {
                     onChange={(e) =>
                       setAnswers({ ...answers, dataSaida: e.target.value })
                     }
-                    className="w-full mb-4 p-4 border-2 border-[#E0E2E9] rounded-lg"
+                    className="w-[200px]  mb-4 p-4 border-2 border-[#E0E2E9] rounded-lg"
                   />
                   <button
                     onClick={() => {
