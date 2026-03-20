@@ -588,16 +588,16 @@ export default function Quiz() {
       {screen === "final_aviso" && (
         <div className="w-full max-w-2xl bg-[#FAFBFC] rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]">
           <div className="w-full text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#051E3C] mb-6">
+            {/* <h2 className="text-2xl md:text-3xl font-bold text-[#051E3C] mb-6">
               Indícios não Identificados!
-            </h2>
+            </h2> */}
             <p className="text-[#051E3C] leading-relaxed">
               Com base nas suas respostas, não conseguimos identificar nenhum
               direito trabalhista para analisar agora.
               <br />
               <br />
               Se ainda quiser falar com nosso escritório, entre em contato pelo
-              WhatsApp: (15) 99746-2217.
+              WhatsApp: <br /> (15) 99746-2217.
             </p>
           </div>
         </div>
