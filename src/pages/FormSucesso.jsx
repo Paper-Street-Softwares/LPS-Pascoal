@@ -71,7 +71,7 @@ export default function Sucesso() {
           </div>
 
           <h2 className="text-2xl md:text-3xl font-bold text-[#051E3C] mb-6">
-            Indícios Identificados!
+            Temos ótimas notícias pra você!{" "}
           </h2>
 
           <p className="text-[#051E3C] mb-8 leading-relaxed">
