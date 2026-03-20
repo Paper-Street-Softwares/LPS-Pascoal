@@ -363,6 +363,9 @@ export default function Quiz() {
                   <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
                     Qual a data em que você começou a trabalhar na empresa?
                   </h2>
+                  <p className="font-secondFont text-sm mb-1">
+                    Toque no espaço abaixo para adicionar a data:
+                  </p>
                   <input
                     type="date"
                     required
@@ -389,6 +392,9 @@ export default function Quiz() {
                   <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
                     Qual a data em que seu contrato foi encerrado?
                   </h2>
+                  <p className="font-secondFont text-sm mb-1">
+                    Toque no espaço abaixo para adicionar a data:
+                  </p>
                   <input
                     type="date"
                     required
