@@ -178,8 +178,8 @@ export default function Quiz() {
             {screen === "start" && (
               <div className="w-full text-center">
                 <h2 className="text-2xl md:text-3xl font-bold text-[#051E3C] mb-6">
-                  Motorista de caminhão CLT: Descubra agora se os seus direitos
-                  estão sendo respeitados
+                  Motorista de caminhão CLT <br /> Descubra agora se os seus
+                  direitos estão sendo respeitados
                 </h2>
                 <p className="text-[#051E3C] mb-8 leading-relaxed">
                   Em poucos segundos, confira se a empresa está respeitando seus
@@ -707,6 +707,17 @@ export default function Quiz() {
           </button>
         </div>
       )}
+
+      <div className="absolute bottom-0 bg-primaryDark p-4 w-full flex justify-center max-h-[97px]">
+        <p className="text-center text-corOutrosTextosBranca">
+          Dr. Alexandre Pascoal, Advogado Trabalhista Especialista nos Direitos
+          dos Motoristas de Caminhão CLT, com mais de 2.000 ações ajuizadas em
+          todo Brasil
+          <br />
+          <br />© 2026 Pascoal & Dyandra Advocacia & Consultoria Jurídica –
+          CNPJ: 55.540.563/0001-64. Todos os direitos reservados.
+        </p>
+      </div>
     </div>
   );
 }
