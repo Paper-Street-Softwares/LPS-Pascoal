@@ -26,9 +26,9 @@ export default function Quiz() {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
 
-  // Incluí o "start" na lista para a barra de progresso contar desde o nome
   const questionScreens = [
     "start",
+    "step0",
     "step1",
     "step2",
     "step_data_adm",
@@ -48,23 +48,31 @@ export default function Quiz() {
   function handleBack() {
     const currentIndex = questionScreens.indexOf(screen);
 
-    if (currentIndex <= 0) {
-      // Já está na primeira tela (nome)
-      return;
-    }
+    if (currentIndex <= 0) return;
 
     let prevStep = questionScreens[currentIndex - 1];
 
-    if (screen === "step8" && answers.periculosidade === "Não") {
-      prevStep = "step7";
+    if (
+      screen === "step_data_saida" &&
+      answers.statusEmprego === "Dispensado"
+    ) {
+      prevStep = "step2";
+    }
+
+    if (screen === "step3" && answers.statusEmprego === "Ativo") {
+      prevStep = "step_data_adm";
+    }
+
+    if (screen === "step3" && answers.statusEmprego === "Dispensado") {
+      prevStep = "step_data_saida";
     }
 
     if (screen === "step7" && answers.rodavaNoite === "Não") {
       prevStep = "step6";
     }
 
-    if (screen === "step3" && answers.statusEmprego === "Ativo") {
-      prevStep = "step_data_adm";
+    if (screen === "step8" && answers.periculosidade === "Não") {
+      prevStep = "step7";
     }
 
     setScreen(prevStep);
@@ -72,7 +80,12 @@ export default function Quiz() {
 
   function handleChoice(field, value, nextScreen) {
     setAnswers((prev) => ({ ...prev, [field]: value }));
-    setScreen(nextScreen);
+
+    if (field === "statusEmprego" && value === "Dispensado") {
+      setScreen("step_data_saida");
+    } else {
+      setScreen(nextScreen);
+    }
   }
 
   function checkFinalStep(lastValue) {
@@ -100,22 +113,26 @@ export default function Quiz() {
     const currentIndex = questionScreens.indexOf(screen);
     if (currentIndex !== -1) {
       const calcProgress = Math.round(
-        ((currentIndex + 1) / questionScreens.length) * 100,
+        (currentIndex / (questionScreens.length - 1)) * 100,
       );
       setProgress(calcProgress);
     }
   }, [screen]);
 
-  const ProgressBar = () => (
-    <div className="w-full mb-6">
-      <div className="h-2 bg-[#F1F3F7] rounded-full overflow-hidden">
-        <div
-          className="h-full bg-primaryLight transition-all duration-500 ease-out"
-          style={{ width: `${progress}%` }}
-        />
+  const ProgressBar = () => {
+    if (screen === "start") return null; // Não renderiza no start
+
+    return (
+      <div className="w-full mb-6">
+        <div className="h-2 bg-[#F1F3F7] rounded-full overflow-hidden">
+          <div
+            className="h-full bg-primaryLight transition-all duration-500 ease-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const BackButton = () => (
     <button
@@ -144,8 +161,28 @@ export default function Quiz() {
             <BackButton />
 
             {screen === "start" && (
+              <div className="w-full text-center">
+                <h2 className="text-2xl md:text-3xl font-bold text-[#051E3C] mb-6">
+                  Motorista de caminhão CLT: Descubra agora se os seus direitos
+                  estão sendo respeitados.
+                </h2>
+
+                <p className="text-[#051E3C] mb-8 leading-relaxed">
+                  Em poucos segundos, confira se a empresa está respeitando seus
+                  direitos trabalhistas.
+                </p>
+                <button
+                  onClick={() => setScreen("step0")}
+                  className="bg-primaryLight text-black font-bold py-4 px-8 rounded-lg hover:shadow-lg transition-all text-lg"
+                >
+                  INICIAR ANÁLISE AGORA
+                </button>
+              </div>
+            )}
+
+            {screen === "step0" && (
               <>
-                <p className="mb-2">Pergunta 1 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 1 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Qual o seu nome?
                 </h2>
@@ -175,7 +212,7 @@ export default function Quiz() {
 
             {screen === "step1" && (
               <>
-                <p className="mb-2">Pergunta 2 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 2 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você trabalha como motorista de caminhão CLT ou autônomo?
                 </h2>
@@ -198,7 +235,7 @@ export default function Quiz() {
 
             {screen === "step2" && (
               <>
-                <p className="mb-2">Pergunta 3 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 3 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você ainda trabalha na empresa ou já foi dispensado?
                 </h2>
@@ -216,7 +253,7 @@ export default function Quiz() {
                       handleChoice(
                         "statusEmprego",
                         "Dispensado",
-                        "step_data_adm",
+                        "step_data_saida",
                       )
                     }
                     className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
@@ -229,7 +266,7 @@ export default function Quiz() {
 
             {screen === "step_data_adm" && (
               <>
-                <p className="mb-2">Pergunta 4 de 15</p>{" "}
+                <p className="mb-2 text-gray-400">Pergunta 4 de 15</p>
                 <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
                   Qual a data em que você começou a trabalhar na empresa?
                 </h2>
@@ -244,12 +281,7 @@ export default function Quiz() {
                 />
                 <button
                   onClick={() => {
-                    if (!answers.dataAdmissao) return;
-                    setScreen(
-                      answers.statusEmprego === "Ativo"
-                        ? "step3"
-                        : "step_data_saida",
-                    );
+                    if (answers.dataAdmissao) setScreen("step3");
                   }}
                   className={`w-full font-semibold py-4 rounded-lg transition-opacity ${!answers.dataAdmissao ? "opacity-50 cursor-not-allowed bg-gray-300" : "bg-primaryLight text-black"}`}
                 >
@@ -260,9 +292,9 @@ export default function Quiz() {
 
             {screen === "step_data_saida" && (
               <>
-                <p className="mb-2">Pergunta 5 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 5 de 15</p>
                 <h2 className="text-2xl font-bold text-[#051E3C] mb-8">
-                  Qual a data em que seu contrato foi encerrado?{" "}
+                  Qual a data em que seu contrato foi encerrado?
                 </h2>
                 <input
                   type="date"
@@ -275,8 +307,7 @@ export default function Quiz() {
                 />
                 <button
                   onClick={() => {
-                    if (!answers.dataSaida) return;
-                    setScreen("step3");
+                    if (answers.dataSaida) setScreen("step3");
                   }}
                   className={`w-full font-semibold py-4 rounded-lg transition-opacity ${!answers.dataSaida ? "opacity-50 cursor-not-allowed bg-gray-300" : "bg-primaryLight text-black"}`}
                 >
@@ -287,7 +318,7 @@ export default function Quiz() {
 
             {screen === "step3" && (
               <>
-                <p className="mb-2">Pergunta 6 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 6 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Além de dirigir o caminhão, você fazia outras funções, como
                   carregar, descarregar ou conferir carga?
@@ -315,7 +346,7 @@ export default function Quiz() {
 
             {screen === "step4" && (
               <>
-                <p className="mb-2">Pergunta 7 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 7 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Qual era a sua jornada de trabalho diária?
                 </h2>
@@ -348,7 +379,7 @@ export default function Quiz() {
 
             {screen === "step5" && (
               <>
-                <p className="mb-2">Pergunta 8 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 8 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você recebia corretamente pelas horas extras e pelo tempo de
                   espera para carga e descarga?
@@ -372,7 +403,7 @@ export default function Quiz() {
 
             {screen === "step6" && (
               <>
-                <p className="mb-2">Pergunta 9 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 9 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você roda à noite, entre 22h e 5h?
                 </h2>
@@ -397,7 +428,7 @@ export default function Quiz() {
 
             {screen === "step6_adicional" && (
               <>
-                <p className="mb-2">Pergunta 10 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 10 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você recebia corretamente o adicional noturno pelo trabalho
                   nesse período?
@@ -425,7 +456,7 @@ export default function Quiz() {
 
             {screen === "step7" && (
               <>
-                <p className="mb-2">Pergunta 11 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 11 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você transportava combustível ou cargas perigosas
                   regularmente?
@@ -453,7 +484,7 @@ export default function Quiz() {
 
             {screen === "step7_perigo" && (
               <>
-                <p className="mb-2">Pergunta 12 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 12 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você recebia corretamente o adicional de periculosidade de 30%
                   por transportar combustível ou cargas perigosas?
@@ -481,7 +512,7 @@ export default function Quiz() {
 
             {screen === "step8" && (
               <>
-                <p className="mb-2">Pergunta 13 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 13 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Já fizeram algum desconto em seu salário sem a sua
                   autorização?
@@ -505,7 +536,7 @@ export default function Quiz() {
 
             {screen === "step9" && (
               <>
-                <p className="mb-2">Pergunta 14 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 14 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você já passou mais de 26 dias seguidos fora de casa por causa
                   da jornada de trabalho?
@@ -529,7 +560,7 @@ export default function Quiz() {
 
             {screen === "step10" && (
               <>
-                <p className="mb-2">Pergunta 15 de 15</p>
+                <p className="mb-2 text-gray-400">Pergunta 15 de 15</p>
                 <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
                   Você já sofreu assédio no trabalho, sendo humilhado,
                   pressionado ou constrangido na frente dos colegas?
@@ -556,44 +587,24 @@ export default function Quiz() {
 
       {screen === "final_aviso" && (
         <div className="w-full max-w-2xl bg-[#FAFBFC] rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9]">
-          <div className="w-full text-center smooth-pop">
+          <div className="w-full text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-[#051E3C] mb-6">
               Indícios não Identificados!
             </h2>
             <p className="text-[#051E3C] leading-relaxed">
               Com base nas suas respostas, não conseguimos identificar nenhum
-              direito trabalhista para analisar agora. Mas fique ligado, porque
-              sempre tem novidade sobre os direitos dos motoristas.
+              direito trabalhista para analisar agora.
               <br />
               <br />
-              Se ainda quiser falar com nosso escritório e tirar suas dúvidas,
-              entre em contato pelo WhatsApp: (15) 99746-2217. Estamos prontos
-              para te orientar.
+              Se ainda quiser falar com nosso escritório, entre em contato pelo
+              WhatsApp: (15) 99746-2217.
             </p>
           </div>
         </div>
       )}
 
       {screen === "desqualificado_clt" && (
-        <div className="bg-[#FAFBFC] smooth-pop max-w-[672px] h-fit rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9] w-full text-center">
-          <div className="w-16 h-16 bg-[#E0E2E9] mx-auto mb-4 rounded-full flex items-center justify-center text-[#051E3C]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-info"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 16v-4" />
-              <path d="M12 8h.01" />
-            </svg>
-          </div>
+        <div className="bg-[#FAFBFC] max-w-[672px] h-fit rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9] w-full text-center">
           <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
             Esta análise é exclusiva para motoristas de caminhão CLT.
             Agradecemos o interesse!
