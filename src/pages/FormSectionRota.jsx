@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 export default function Quiz() {
   const [screen, setScreen] = useState("start");
   const [answers, setAnswers] = useState({
-    nomeCompleto: "", // Adicionado
+    nome: "", // Adicionado
     whatsapp: "", // Adicionado
     cidade: "", // Adicionado
     estado: "", // Adicionado
@@ -196,9 +196,9 @@ export default function Quiz() {
                       type="text"
                       placeholder="Seu nome"
                       className="w-full p-3 border-2 border-[#E0E2E9] rounded-lg focus:border-primaryLight outline-none"
-                      value={answers.nomeCompleto}
+                      value={answers.nome}
                       onChange={(e) =>
-                        setAnswers({ ...answers, nomeCompleto: e.target.value })
+                        setAnswers({ ...answers, nome: e.target.value })
                       }
                     />
                   </div>
@@ -251,13 +251,13 @@ export default function Quiz() {
                 <button
                   onClick={() => setScreen("step1")}
                   disabled={
-                    !answers.nomeCompleto ||
+                    !answers.nome ||
                     !answers.whatsapp ||
                     !answers.cidade ||
                     !answers.estado
                   }
                   className={`w-full md:w-auto font-bold py-4 px-8 rounded-lg transition-all text-lg ${
-                    !answers.nomeCompleto ||
+                    !answers.nome ||
                     !answers.whatsapp ||
                     !answers.cidade ||
                     !answers.estado
