@@ -76,10 +76,14 @@ export default function Sucesso() {
 
           <p className="text-[#051E3C] mb-8 leading-relaxed">
             Com base nas suas respostas, identificamos indícios de que seus
-            direitos trabalhistas podem ter sido violados. Clique no botão
-            abaixo para enviar suas informações e fique ligado: nossa equipe vai
-            analisar seu caso com atenção e entrará em contato em até 48 horas
-            para te orientar sobre os próximos passos.
+            direitos trabalhistas podem ter sido violados.
+            <span className="font-bold text-lg">
+              {" "}
+              Clique no botão abaixo para enviar suas informações
+            </span>{" "}
+            e fique ligado: nossa equipe vai analisar seu caso com atenção e
+            entrará em contato em até 48 horas para te orientar sobre os
+            próximos passos.
           </p>
 
           <a
