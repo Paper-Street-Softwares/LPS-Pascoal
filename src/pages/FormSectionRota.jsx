@@ -37,6 +37,7 @@ export default function Quiz() {
     "step2",
     "step_data_adm",
     "step_data_saida",
+    "prescrito_aviso",
     "step3",
     "step4",
     "step5",
@@ -159,6 +160,16 @@ export default function Quiz() {
     </button>
   );
 
+  const checkPrescricao = (dataDigitada) => {
+    const hoje = new Date();
+    const dataSaida = new Date(dataDigitada);
+
+    // Calcula a diferença em milissegundos e converte para anos
+    const diferencaAnos = (hoje - dataSaida) / (1000 * 60 * 60 * 24 * 365.25);
+
+    return diferencaAnos > 2;
+  };
+
   return (
     <div className="min-h-screen bg-primaryDark flex items-center justify-center p-4 relative">
       <div className="absolute top-0 bg-primaryDark border-b p-4 w-full flex justify-center">
@@ -178,13 +189,12 @@ export default function Quiz() {
 
               {screen === "start" && (
                 <div className="w-full text-center">
-                  <h2 className="text-2xl md:text-3xl font-bold text-[#051E3C] mb-6">
-                    Motorista de caminhão CLT <br /> Descubra agora se os seus
-                    direitos estão sendo respeitados
+                  <h2 className="text-2xl md:text-3xl text-[#051E3C] mb-6">
+                    <strong>Motorista de caminhão CLT</strong>
                   </h2>
                   <p className="text-[#051E3C] mb-8 leading-relaxed">
-                    Em poucos segundos, confira se a empresa está respeitando
-                    seus direitos trabalhistas.
+                    Descubra em 60 segundos se os seus direitos estão sendo
+                    respeitados.
                   </p>
 
                   {/* Formulário de Identificação */}
@@ -305,7 +315,7 @@ export default function Quiz() {
                 <>
                   <p className="mb-2 text-gray-400">Pergunta 1 de 13</p>
                   <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                    Você trabalha como motorista de caminhão CLT ou autônomo?
+                    Você trabalha como Motorista de Caminhão CLT ou autônomo?
                   </h2>
                   <div className="space-y-4">
                     <button
@@ -314,7 +324,7 @@ export default function Quiz() {
                       }
                       className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
                     >
-                      Motorista de caminhão CLT ✅
+                      Motorista de Caminhão CLT ✅
                     </button>
                     <button
                       onClick={() => setScreen("desqualificado_clt")}
@@ -406,13 +416,44 @@ export default function Quiz() {
                   />
                   <button
                     onClick={() => {
-                      if (answers.dataSaida) setScreen("step3");
+                      if (answers.dataSaida) {
+                        if (checkPrescricao(answers.dataSaida)) {
+                          setScreen("prescrito_aviso");
+                        } else {
+                          setScreen("step3");
+                        }
+                      }
                     }}
                     className={`w-full font-semibold py-4 rounded-lg transition-opacity ${!answers.dataSaida ? "opacity-50 cursor-not-allowed bg-gray-300" : "bg-primaryLight text-black"}`}
                   >
                     Continuar
                   </button>
                 </>
+              )}
+
+              {screen === "prescrito_aviso" && (
+                <div className="bg-[#FAFBFC] max-w-[672px] h-fit rounded-2xl shadow-2xl p-6 md:p-10 border border-[#E0E2E9] w-full text-center">
+                  <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
+                    Sinto muito!
+                  </h2>
+                  <p className="text-[#051E3C] mb-8 leading-relaxed">
+                    Com base na data de saída informada, seus direitos já estão
+                    prescritos e não há possibilidade de análise trabalhista
+                    neste caso.
+                    <br />
+                    <br />
+                    Para outros assuntos, entre em contato com nossa equipe pelo
+                    WhatsApp:
+                    <br />
+                    <strong>(15) 99746-2217</strong>
+                  </p>
+                  <button
+                    onClick={() => setScreen("start")}
+                    className="w-full bg-[#E0E2E9] text-[#051E3C] font-semibold py-4 px-6 rounded-lg"
+                  >
+                    Voltar ao início
+                  </button>
+                </div>
               )}
 
               {screen === "step3" && (
@@ -482,8 +523,8 @@ export default function Quiz() {
                 <>
                   <p className="mb-2 text-gray-400">Pergunta 6 de 13</p>
                   <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                    Você recebia corretamente pelas horas extras e pelo tempo de
-                    espera para carga e descarga?
+                    Você recebia pelas horas extras e pelo tempo que ficava à
+                    disposição da empresa para carga e descarga?
                   </h2>
                   <div className="space-y-4">
                     <button
@@ -703,12 +744,12 @@ export default function Quiz() {
               Indícios não Identificados!
             </h2> */}
               <p className="text-[#051E3C] leading-relaxed">
-                Com base nas suas respostas, não conseguimos identificar nenhum
-                direito trabalhista para analisar agora.
+                Com base nas suas respostas, não foram identificados direitos
+                trabalhistas a serem analisados no momento.
                 <br />
                 <br />
-                Se ainda quiser falar com nosso escritório, entre em contato
-                pelo WhatsApp: <br /> (15) 99746-2217.
+                Para outros assuntos, entre em contato com nossa equipe pelo
+                WhatsApp: <br /> (15) 99746-2217.
               </p>
             </div>
           </div>
@@ -733,8 +774,8 @@ export default function Quiz() {
       <div className="absolute bottom-0 bg-primaryDark p-4 w-full flex justify-center">
         <p className="text-center text-corOutrosTextosBranca text-[10px]">
           Dr. Alexandre Pascoal, Advogado Trabalhista Especialista nos Direitos
-          dos Motoristas de Caminhão CLT, com mais de 2.000 ações ajuizadas em
-          todo Brasil
+          dos Motoristas de Caminhão, com mais de 2.000 ações ajuizadas em todo
+          Brasil
           <br />
           <br />© 2026 Pascoal & Dyandra Advocacia & Consultoria Jurídica –
           CNPJ: 55.540.563/0001-64. Todos os direitos reservados.
