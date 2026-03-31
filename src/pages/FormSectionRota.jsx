@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/imgs/logo/logoDesktop.webp";
 import { ArrowLeft } from "lucide-react";
+import content from "../content/content";
 
 export default function Quiz() {
   const [screen, setScreen] = useState("start");
@@ -190,7 +191,7 @@ export default function Quiz() {
               {screen === "start" && (
                 <div className="w-full text-center">
                   <h2 className="text-2xl md:text-3xl text-[#051E3C] mb-6">
-                    <strong>Motorista de caminhão CLT</strong>
+                    <strong>Motorista de Caminhão</strong>
                   </h2>
                   <p className="text-[#051E3C] mb-8 leading-relaxed">
                     Descubra em 60 segundos se os seus direitos estão sendo
@@ -445,7 +446,16 @@ export default function Quiz() {
                     Para outros assuntos, entre em contato com nossa equipe pelo
                     WhatsApp:
                     <br />
-                    <strong>(15) 99746-2217</strong>
+                    <strong>
+                      <a
+                        href={content.texts.links.ctaWhatsapp}
+                        className="underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        (15) 99746-2217
+                      </a>
+                    </strong>
                   </p>
                   <button
                     onClick={() => setScreen("start")}
@@ -749,7 +759,18 @@ export default function Quiz() {
                 <br />
                 <br />
                 Para outros assuntos, entre em contato com nossa equipe pelo
-                WhatsApp: <br /> (15) 99746-2217.
+                WhatsApp: <br />{" "}
+                <strong>
+                  <a
+                    href={content.texts.links.ctaWhatsapp}
+                    className="underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    (15) 99746-2217
+                  </a>
+                </strong>
+                .
               </p>
             </div>
           </div>
