@@ -171,6 +171,15 @@ export default function Quiz() {
     return diferencaAnos > 2;
   };
 
+  const generateWhatsappLink = (motivo) => {
+    const telefone = "5515997462217"; // Formato internacional
+    const saudacao = `Olá, vim pelo site, mas meu caso não se encaixou nas opções disponíveis (${motivo}). Sou motorista de caminhão e preciso de orientação.`;
+    const dados = `\n\n*Dados do Contato:*\nNome: ${answers.nome}\nCidade: ${answers.cidade}/${answers.estado}\nWhatsApp: ${answers.whatsapp}`;
+
+    const mensagemFull = encodeURIComponent(saudacao + dados);
+    return `https://wa.me/${telefone}?text=${mensagemFull}`;
+  };
+
   return (
     <div className="min-h-screen bg-primaryDark flex items-center justify-center p-4 relative">
       <div className="absolute top-0 bg-primaryDark border-b p-4 w-full flex justify-center">
@@ -439,33 +448,30 @@ export default function Quiz() {
                   </h2>
                   <p className="text-[#051E3C] mb-8 leading-relaxed">
                     Com base na data de saída informada, seus direitos já estão
-                    prescritos e não há possibilidade de análise trabalhista
-                    neste caso.
+                    prescritos para uma ação padrão, pois faz mais de 2 anos que
+                    o contrato se encerrou.
                     <br />
                     <br />
-                    Para outros assuntos, entre em contato com nossa equipe pelo
-                    WhatsApp:
-                    <br />
-                    <strong>
-                      <a
-                        href={content.texts.links.ctaWhatsapp}
-                        className="underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        (15) 99746-2217
-                      </a>
-                    </strong>
+                    Caso queira tirar dúvidas específicas, fale com nossa
+                    equipe:
                   </p>
+
+                  <a
+                    href={generateWhatsappLink(
+                      "Tempo de saída superior a 2 anos",
+                    )}
+                    className="w-full flex items-center justify-center text-center gap-2 bg-wppLight text-white font-bold py-4 px-6 rounded-lg hover:shadow-lg transition-all"
+                  >
+                    <span>{content.texts.svgs.wpp}</span> WhatsApp
+                  </a>
                   <button
                     onClick={() => setScreen("start")}
-                    className="w-full bg-[#E0E2E9] text-[#051E3C] font-semibold py-4 px-6 rounded-lg"
+                    className="w-full bg-[#E0E2E9] text-[#051E3C] font-semibold py-4 px-6 rounded-lg mt-8"
                   >
                     Voltar ao início
                   </button>
                 </div>
               )}
-
               {screen === "step3" && (
                 <>
                   <p className="mb-2 text-gray-400">Pergunta 4 de 13</p>
