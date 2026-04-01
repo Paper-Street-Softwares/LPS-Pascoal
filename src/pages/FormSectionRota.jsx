@@ -465,16 +465,10 @@ export default function Quiz() {
                     href={generateWhatsappLink(
                       "Tempo de saída superior a 2 anos",
                     )}
-                    className="w-full flex items-center justify-center text-center gap-2 bg-wppLight text-white font-bold py-4 px-6 rounded-lg hover:shadow-lg transition-all"
+                    className="underline"
                   >
-                    <span>{content.texts.svgs.wpp}</span> WhatsApp
+                    (15) 99746-2217
                   </a>
-                  <button
-                    onClick={() => setScreen("start")}
-                    className="w-full bg-[#E0E2E9] text-[#051E3C] font-semibold py-4 px-6 rounded-lg mt-8"
-                  >
-                    Voltar ao início
-                  </button>
                 </div>
               )}
               {screen === "step3" && (
