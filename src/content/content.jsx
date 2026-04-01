@@ -105,7 +105,7 @@ export const infos = {
   youtubeProfile: "",
 
   whatsappDefaultMessage:
-    "Olá, vim pelo site, mas meu caso não se encaixou nas opções disponíveis. Sou motorista de caminhão e preciso de orientação.",
+    "",
   whatsChatDefaultMessage:
     "Gostaria de falar conosco agora mesmo? Clque abaixo 👇",
   slogan: "",
