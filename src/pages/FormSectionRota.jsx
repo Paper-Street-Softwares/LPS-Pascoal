@@ -173,10 +173,15 @@ export default function Quiz() {
 
   const generateWhatsappLink = (motivo) => {
     const telefone = "5515997462217"; // Formato internacional
-    const saudacao = `Olá, vim pelo site, mas meu caso não se encaixou nas opções disponíveis (${motivo}). Sou motorista de caminhão e preciso de orientação.`;
+
+    const motivoTexto = motivo ? ` (${motivo})` : "";
+
+    const saudacao = `Olá, vim pelo site, mas meu caso não se encaixou nas opções disponíveis${motivoTexto}. Sou motorista de caminhão e preciso de orientação.`;
+
     const dados = `\n\n*Dados do Contato:*\nNome: ${answers.nome}\nCidade: ${answers.cidade}/${answers.estado}\nWhatsApp: ${answers.whatsapp}`;
 
     const mensagemFull = encodeURIComponent(saudacao + dados);
+
     return `https://wa.me/${telefone}?text=${mensagemFull}`;
   };
 
@@ -768,9 +773,7 @@ export default function Quiz() {
                 WhatsApp: <br />{" "}
                 <strong>
                   <a
-                    href={generateWhatsappLink(
-                      "Respondeu 'Não' para todos os quesitos",
-                    )}
+                    href={generateWhatsappLink("")}
                     className="underline"
                     target="_blank"
                     rel="noopener noreferrer"
