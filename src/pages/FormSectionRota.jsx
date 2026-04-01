@@ -768,7 +768,9 @@ export default function Quiz() {
                 WhatsApp: <br />{" "}
                 <strong>
                   <a
-                    href={content.texts.links.ctaWhatsapp}
+                    href={generateWhatsappLink(
+                      "Respondeu 'Não' para todos os quesitos",
+                    )}
                     className="underline"
                     target="_blank"
                     rel="noopener noreferrer"
