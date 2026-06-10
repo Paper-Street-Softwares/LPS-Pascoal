@@ -119,7 +119,7 @@ export default function Quiz() {
     const currentIndex = questionScreens.indexOf(screen);
     if (currentIndex !== -1) {
       const calcProgress = Math.round(
-        (currentIndex / (questionScreens.length - 1)) * 100,
+        (currentIndex / (questionScreens.length - 1)) * 100
       );
       setProgress(calcProgress);
     }
@@ -148,13 +148,18 @@ export default function Quiz() {
     if (phoneNumberLength < 3) return phoneNumber;
     if (phoneNumberLength < 7)
       return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2)}`;
-    return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2, 7)}-${phoneNumber.slice(7, 11)}`;
+    return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(
+      2,
+      7
+    )}-${phoneNumber.slice(7, 11)}`;
   };
 
   const BackButton = () => (
     <button
       onClick={handleBack}
-      className={`flex items-center gap-2 text-gray-400 hover:text-primaryDark mb-2 transition-colors w-fit ${screen === "start" ? "invisible" : ""}`}
+      className={`flex items-center gap-2 text-gray-400 hover:text-primaryDark mb-2 transition-colors w-fit ${
+        screen === "start" ? "invisible" : ""
+      }`}
     >
       <ArrowLeft size={18} />
       <span className="text-sm font-medium">Voltar</span>
@@ -371,7 +376,7 @@ export default function Quiz() {
                         handleChoice(
                           "statusEmprego",
                           "Dispensado",
-                          "step_data_saida",
+                          "step_data_saida"
                         )
                       }
                       className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
@@ -404,7 +409,11 @@ export default function Quiz() {
                     onClick={() => {
                       if (answers.dataAdmissao) setScreen("step3");
                     }}
-                    className={`w-full font-semibold py-4 rounded-lg transition-opacity ${!answers.dataAdmissao ? "opacity-50 cursor-not-allowed bg-gray-300" : "bg-primaryLight text-black"}`}
+                    className={`w-full font-semibold py-4 rounded-lg transition-opacity ${
+                      !answers.dataAdmissao
+                        ? "opacity-50 cursor-not-allowed bg-gray-300"
+                        : "bg-primaryLight text-black"
+                    }`}
                   >
                     Continuar
                   </button>
@@ -439,7 +448,11 @@ export default function Quiz() {
                         }
                       }
                     }}
-                    className={`w-full font-semibold py-4 rounded-lg transition-opacity ${!answers.dataSaida ? "opacity-50 cursor-not-allowed bg-gray-300" : "bg-primaryLight text-black"}`}
+                    className={`w-full font-semibold py-4 rounded-lg transition-opacity ${
+                      !answers.dataSaida
+                        ? "opacity-50 cursor-not-allowed bg-gray-300"
+                        : "bg-primaryLight text-black"
+                    }`}
                   >
                     Continuar
                   </button>
@@ -463,7 +476,7 @@ export default function Quiz() {
 
                   <a
                     href={generateWhatsappLink(
-                      "Tempo de saída superior a 2 anos",
+                      "Tempo de saída superior a 2 anos"
                     )}
                     className="underline"
                   >
@@ -558,6 +571,18 @@ export default function Quiz() {
                     >
                       Não
                     </button>
+                    <button
+                      onClick={() =>
+                        handleChoice(
+                          "horasExtras",
+                          "Não tenho certeza",
+                          "step6"
+                        )
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não tenho certeza
+                    </button>
                   </div>
                 </>
               )}
@@ -593,8 +618,8 @@ export default function Quiz() {
                 <>
                   <p className="mb-2 text-gray-400">Pergunta 8 de 13</p>
                   <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                    Você recebia corretamente o adicional noturno pelo trabalho
-                    nesse período?
+                    Você recebia o adicional noturno pelo trabalho nesse
+                    período?
                   </h2>
                   <div className="space-y-4">
                     <button
@@ -612,6 +637,18 @@ export default function Quiz() {
                       className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
                     >
                       Não
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice(
+                          "adicionalNoturno",
+                          "Não tenho certeza",
+                          "step7"
+                        )
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não tenho certeza
                     </button>
                   </div>
                 </>
@@ -649,8 +686,8 @@ export default function Quiz() {
                 <>
                   <p className="mb-2 text-gray-400">Pergunta 10 de 13</p>
                   <h2 className="text-2xl font-bold mb-6 text-[#051E3C]">
-                    Você recebia corretamente o adicional de periculosidade de
-                    30% por transportar combustível ou cargas perigosas?
+                    Você recebia o adicional de periculosidade de 30% por
+                    transportar combustível ou cargas perigosas?
                   </h2>
                   <div className="space-y-4">
                     <button
@@ -668,6 +705,18 @@ export default function Quiz() {
                       className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
                     >
                       Não
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleChoice(
+                          "recebiaPericulosidade",
+                          "Não tenho certeza",
+                          "step8"
+                        )
+                      }
+                      className="w-full p-4 rounded-lg border-2 border-[#E0E2E9] bg-white text-left font-medium"
+                    >
+                      Não tenho certeza
                     </button>
                   </div>
                 </>
