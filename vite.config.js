@@ -15,6 +15,7 @@ function preloadCssPlugin() {
 }
 
 export default defineConfig({
+  base: "/leads/",
   plugins: [react(), preloadCssPlugin()],
   resolve: {
     alias: {
